@@ -1,0 +1,113 @@
+[gd_scene load_steps=19 format=3 uid="uid://cv6yalmlvdhfa"]
+
+[ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/character_body_3d.gd" id="1_3tbxw"]
+[ext_resource type="Texture2D" uid="uid://oph734p5l0am" path="res://icon.svg" id="2_bqqt8"]
+[ext_resource type="Texture2D" uid="uid://bkmsqw1vpva1v" path="res://textures/rocky_terrain_diff_4k.png" id="2_ws5ob"]
+[ext_resource type="Texture2D" uid="uid://d1yxfbouixk2q" path="res://textures/rocky_terrain_nor_gl_4k.png" id="3_bqqt8"]
+[ext_resource type="Script" uid="uid://owub6agj5s3n" path="res://scripts/evilGuy.gd" id="5_8qpgq"]
+[ext_resource type="Script" uid="uid://dgtjnc5vtvtf7" path="res://ability_1_cooldown_display.gd" id="6_pv6b4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3tbxw"]
+sky_top_color = Color(0.62929, 0.691357, 0.777869, 1)
+sky_horizon_color = Color(1.24091, 1.32471, 1.35946, 1)
+ground_bottom_color = Color(0.305506, 0.578645, 0.631121, 1)
+ground_horizon_color = Color(1.24091, 1.32471, 1.35946, 1)
+
+[sub_resource type="Sky" id="Sky_e3m3f"]
+sky_material = SubResource("ProceduralSkyMaterial_3tbxw")
+
+[sub_resource type="Environment" id="Environment_ws5ob"]
+background_mode = 2
+sky = SubResource("Sky_e3m3f")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ws5ob"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pv6b4"]
+albedo_texture = ExtResource("2_bqqt8")
+uv1_scale = Vector3(4.2, 4.2, 4.2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bqqt8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8qpgq"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e3m3f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qpgq"]
+albedo_texture = ExtResource("2_ws5ob")
+normal_enabled = true
+normal_texture = ExtResource("3_bqqt8")
+uv1_scale = Vector3(60, 60, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3tbxw"]
+size = Vector3(20, 0, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bqqt8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8qpgq"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ws5ob")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_3tbxw")
+
+[node name="ability1Cooldown" type="Timer" parent="player"]
+wait_time = 5.0
+one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_ws5ob")
+surface_material_override/0 = SubResource("StandardMaterial3D_pv6b4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_bqqt8")
+
+[node name="cameraPivot" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99277, 0)
+
+[node name="Camera3D" type="Camera3D" parent="player/cameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.917819, -0.105693, 1.447)
+fov = 90.0
+
+[node name="ability1CooldownDisplay" type="Label" parent="player"]
+offset_right = 65.0
+offset_bottom = 23.0
+text = "TEXTTTT"
+label_settings = SubResource("LabelSettings_8qpgq")
+horizontal_alignment = 2
+vertical_alignment = 2
+script = ExtResource("6_pv6b4")
+
+[node name="plane" type="StaticBody3D" parent="."]
+
+[node name="mainPlane" type="MeshInstance3D" parent="plane"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0.20334, 0, 0)
+mesh = SubResource("PlaneMesh_e3m3f")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_8qpgq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="plane"]
+transform = Transform3D(1.98151, 0, 0, 0, 0.998744, 0, 0, 0, 2.02853, 0.20334, 0, 0)
+shape = SubResource("BoxShape3D_3tbxw")
+
+[node name="evilGuy" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.83961, 0.611887, 1.447)
+script = ExtResource("5_8qpgq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="evilGuy"]
+mesh = SubResource("BoxMesh_bqqt8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="evilGuy"]
+shape = SubResource("BoxShape3D_8qpgq")
+
+[connection signal="timeout" from="player/ability1Cooldown" to="player" method="_on_ability_1_cooldown_timeout"]
