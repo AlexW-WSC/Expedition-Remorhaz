@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhgljm2ocjttf"]
+
+[ext_resource type="Script" uid="uid://owub6agj5s3n" path="res://scripts/evilGuy.gd" id="1_3by50"]
+[ext_resource type="Shader" uid="uid://lvo7u677w2p7" path="res://psxpostprocessing.gdshader" id="2_gbl4t"]
+[ext_resource type="Shader" uid="uid://f65ydlo2jm83" path="res://outline.gdshader" id="3_r83iu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jmyk6"]
+render_priority = 0
+shader = ExtResource("2_gbl4t")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5ji8"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_jmyk6")
+shader = ExtResource("3_r83iu")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 10.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_bqqt8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8dnxm"]
+
+[node name="YetiEnemy" type="CharacterBody3D"]
+transform = Transform3D(0.999998, 0.000796807, -0.00179283, -0.000800005, 0.999998, -0.00178498, 0.00179141, 0.00178641, 0.999997, 0, 0, 0)
+script = ExtResource("1_3by50")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -6.45741e-11, 0, -2.95586e-12, 1, 0, -1.16415e-10, 0, 1, 0, 0, 0)
+material_overlay = SubResource("ShaderMaterial_x5ji8")
+mesh = SubResource("BoxMesh_bqqt8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, -2.62571e-09, 0, -1.20508e-11, 1, 0, -5.23869e-09, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_8dnxm")

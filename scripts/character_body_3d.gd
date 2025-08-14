@@ -1,29 +1,75 @@
 extends CharacterBody3D
 
+signal deal_damage
 
 const SPEED = (100 / 20)
 const JUMP_VELOCITY = 4.5
 const SENSITIVITY = 500
-func _process(delta: float) -> void:
-	
-	if $ability1Cooldown.time_left == 0:
-		$ability1CooldownDisplay.hide()
-	else:
-		$ability1CooldownDisplay.show()
-		$ability1CooldownDisplay.text = str(round($ability1Cooldown.time_left))
-	
+var max_bullets_in_mag = 6
+var bullets_in_mag = 6
+var ability_1_usable = true
+#timers 
+@export var ability_1_cooldown_timer: Timer 
+@export var reload_timer: Timer
+#labels
+@export var ability_1_cooldown_display: Label
+@export var bullet_display: Label
 
-var ability1Usable = true
+func reload_weapon():
+	if bullets_in_mag != max_bullets_in_mag:
+		reload_timer.start()
+		await reload_timer.timeout
+		await get_tree().create_timer(0.1).timeout
+		bullets_in_mag = max_bullets_in_mag
+		ability_1_usable = true
+		reload_timer.stop()
+		
+		
+
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _process(delta: float) -> void:
+	if ability_1_cooldown_timer.time_left == 0:
+		ability_1_cooldown_display.hide()
+	else:
+		ability_1_cooldown_display.show()
+		ability_1_cooldown_display.text = str(round(ability_1_cooldown_timer.time_left))
+		
+	bullet_display.text = (str(bullets_in_mag) + "/" + str(max_bullets_in_mag))
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	# Handle Abilities
-	if Input.is_action_just_pressed("q") and ability1Usable == true:
-		print("Rawr Ability1")
+	
+	if Input.is_action_just_pressed("r"):
+		reload_weapon()
+		
+	
+	if Input.is_action_pressed("m1") and ability_1_usable == true and reload_timer.is_stopped() == true:
+		if bullets_in_mag >= 1:
+			print("rawr, primary")
+			bullets_in_mag -= 1
+			ability_1_usable = false
+			ability_1_cooldown_timer.start()
+			if $CameraPivot/Camera3D/RayCast3D.is_colliding():
+				var hit = $CameraPivot/Camera3D/RayCast3D.get_collider()
+				emit_signal("deal_damage", hit, 30)
+		else:
+			reload_weapon()
+		
+	
+	if Input.is_action_just_pressed("lshift"):
+		print("Rawr Ability2")
 		velocity.y = JUMP_VELOCITY
-		ability1Usable = false
-		$ability1Cooldown.start()
+		
+	if Input.is_action_just_pressed("q"):
+		print("Rawr Ability3")
+		
+	if Input.is_action_just_pressed("e"):
+		print("Rawr Ability4")
 		
 	
 	# Handle jump.
@@ -42,12 +88,16 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	
+	
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x / SENSITIVITY
-		$cameraPivot.rotation.x -= event.relative.y / SENSITIVITY
-		$cameraPivot.rotation.x = clamp($cameraPivot.rotation.x,deg_to_rad(-80),deg_to_rad(80))
+		$CameraPivot.rotation.x -= event.relative.y / SENSITIVITY
+		$CameraPivot.rotation.x = clamp($CameraPivot.rotation.x,deg_to_rad(-80),deg_to_rad(80))
 
 
 func _on_ability_1_cooldown_timeout() -> void:
-	ability1Usable = true
+	ability_1_usable = true
+
+
+	
