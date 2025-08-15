@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 signal deal_damage
+@warning_ignore("unused_signal")
+signal highlight_enemy
 
 const SPEED = (100 / 20)
 const JUMP_VELOCITY = 4.5
@@ -8,12 +10,18 @@ const SENSITIVITY = 500
 var max_bullets_in_mag = 6
 var bullets_in_mag = 6
 var ability_1_usable = true
+
+var last_highlighted = null
 #timers 
 @export var ability_1_cooldown_timer: Timer 
 @export var reload_timer: Timer
 #labels
 @export var ability_1_cooldown_display: Label
 @export var bullet_display: Label
+
+@export var crosshair_raycast: RayCast3D
+
+@onready var target = self
 
 func reload_weapon():
 	if bullets_in_mag != max_bullets_in_mag:
@@ -28,6 +36,8 @@ func reload_weapon():
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	
 
 func _process(delta: float) -> void:
 	if ability_1_cooldown_timer.time_left == 0:
@@ -39,12 +49,23 @@ func _process(delta: float) -> void:
 	bullet_display.text = (str(bullets_in_mag) + "/" + str(max_bullets_in_mag))
 
 func _physics_process(delta: float) -> void:
+	if crosshair_raycast.is_colliding() == true:
+		var hit = crosshair_raycast.get_collider()
+		if hit != last_highlighted:
+			emit_signal("highlight_enemy", hit)
+			last_highlighted = hit
+	else:
+		if last_highlighted:
+			emit_signal("highlight_enemy", null)
+			last_highlighted = null
+		
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	# Handle Abilities
 	
-	if Input.is_action_just_pressed("r"):
+	if Input.is_action_just_pressed("r") and reload_timer.is_stopped() == true:
 		reload_weapon()
 		
 	
@@ -54,9 +75,9 @@ func _physics_process(delta: float) -> void:
 			bullets_in_mag -= 1
 			ability_1_usable = false
 			ability_1_cooldown_timer.start()
-			if $CameraPivot/Camera3D/RayCast3D.is_colliding():
-				var hit = $CameraPivot/Camera3D/RayCast3D.get_collider()
-				emit_signal("deal_damage", hit, 30)
+			if crosshair_raycast.is_colliding():
+				var hit = crosshair_raycast.get_collider()
+				emit_signal("deal_damage", hit, 10)
 		else:
 			reload_weapon()
 		

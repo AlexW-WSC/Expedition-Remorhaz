@@ -1,9 +1,6 @@
-res://enemy_spawner.gd
-res://yeti_enemy.tscn
+res://MainGame.tscn
 res://outline.gdshader
 res://monkey_weighted.gdshader
+res://yeti_enemy.tscn
 res://scripts/evilGuy.gd
-res://MainGame.tscn
 res://scripts/character_body_3d.gd
-res://ability_1_cooldown_display.gd
-res://bullets_in_mag_display.gd

@@ -1,7 +1,14 @@
+CollisionShape3D
+MeshInstance3D
+StaticBody3D
+Area3D
+NavigationAgent3D
+NavigationRegion3D
+Sprite2D
+CanvasLayer
 Timer
 Label
 Node3D
 TextureRect
 CenterContainer
 RichTextLabel
-RayCast3D
