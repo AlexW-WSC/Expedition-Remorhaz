@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1orubrcj0wqn"]
+
+[ext_resource type="Script" uid="uid://dfubf0kjys0qe" path="res://game.gd" id="1_iukft"]
+
+[node name="game3D" type="Node3D" node_paths=PackedStringArray("secondsTimer", "minutesTimer")]
+script = ExtResource("1_iukft")
+secondsTimer = NodePath("secondsTimer")
+minutesTimer = NodePath("minutesTimer")
+
+[node name="secondsTimer" type="Timer" parent="."]
+
+[node name="minutesTimer" type="Timer" parent="."]
+wait_time = 60.0
+
+[connection signal="timeout" from="secondsTimer" to="." method="_on_countdown_timer_timeout"]
+[connection signal="timeout" from="minutesTimer" to="." method="_on_minutes_timer_timeout"]
