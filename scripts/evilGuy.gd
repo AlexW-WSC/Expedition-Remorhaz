@@ -1,7 +1,7 @@
 extends CharacterBody3D
-var max_health := 100.0
+var max_health := 40.0
 var health := max_health
-const SPEED = 5.0
+const SPEED = 2.0
 const TURN_SPEED = 4.0
 const GRAVITY = 9.8
 @onready var mesh = $MeshInstance3D
@@ -11,29 +11,20 @@ const GRAVITY = 9.8
 @onready var shader_material = mesh.material_overlay
 
 @onready var navigation_agent : NavigationAgent3D = $NavigationAgent3D
-var player = null
+@onready  var target : CharacterBody3D = $"../player"
 
-func _ready() -> void:
-	player = get_tree().get_nodes_in_group("Player")[0]
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y = GRAVITY * delta
-	else:
-		velocity.y -= 2
-	
-	navigation_agent.set_target_position(player.global_position)
-	
-	if navigation_agent.is_navigation_finished():
-		
-		print("done")
-		return
-	
-	var next_position: Vector3 = navigation_agent.get_next_path_position()
-	print(next_position)
-	velocity = global_position.direction_to(next_position) * SPEED
+	var current_location = global_transform.origin
+	var next_location = navigation_agent.get_next_path_position()
+	var new_velocity = (next_location - current_location).normalized() * SPEED
+	velocity = new_velocity
 	move_and_slide()
 	
+	
+	
+func update_target_location(target_location):
+	navigation_agent.set_target_position(target_location)
 
 
 

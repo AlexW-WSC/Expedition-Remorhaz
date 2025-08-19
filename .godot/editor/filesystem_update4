@@ -3,4 +3,6 @@ res://outline.gdshader
 res://monkey_weighted.gdshader
 res://yeti_enemy.tscn
 res://scripts/evilGuy.gd
+res://main_game.gd
+res://enemy_spawner.gd
 res://scripts/character_body_3d.gd

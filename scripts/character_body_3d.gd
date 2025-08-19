@@ -54,6 +54,7 @@ func _physics_process(delta: float) -> void:
 		if hit != last_highlighted:
 			emit_signal("highlight_enemy", hit)
 			last_highlighted = hit
+			print(hit)
 	else:
 		if last_highlighted:
 			emit_signal("highlight_enemy", null)
