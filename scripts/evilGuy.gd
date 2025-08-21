@@ -4,6 +4,7 @@ var health := max_health
 const SPEED = 2.0
 const TURN_SPEED = 4.0
 const GRAVITY = 9.8
+
 @onready var mesh = $MeshInstance3D
 
 @export var white_material: Material
@@ -13,6 +14,8 @@ const GRAVITY = 9.8
 @onready var navigation_agent : NavigationAgent3D = $NavigationAgent3D
 @onready  var target : CharacterBody3D = $"../player"
 
+func _ready() -> void:
+	print(self)
 
 func _physics_process(delta: float) -> void:
 	var current_location = global_transform.origin
@@ -46,7 +49,7 @@ func _on_player_deal_damage(hit, damage) -> void:
 
 func _on_player_highlight_enemy(hit) -> void:
 	if hit == self:
-		print("I am being highlighted.")
+		print("I am being highlighted:", self)
 		shader_material.set_shader_parameter("outline_onoff", 1.0)
 	else:
 		shader_material.set_shader_parameter("outline_onoff", 0.0)

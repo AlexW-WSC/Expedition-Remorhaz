@@ -63,8 +63,10 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v3hs3"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("secondsTimer", "minutesTimer")]
 script = ExtResource("1_pv6b4")
+secondsTimer = NodePath("Seconds Timer")
+minutesTimer = NodePath("Minutes Timer")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_8dnxm")
@@ -172,9 +174,10 @@ transform = Transform3D(0.999998, 0.000796805, -0.00179284, -0.000800005, 0.9999
 white_material = SubResource("StandardMaterial3D_v3hs3")
 red_material = SubResource("StandardMaterial3D_x5ji8")
 
-[node name="EnemySpawner" type="Node3D" parent="." node_paths=PackedStringArray("spawnpoints")]
+[node name="EnemySpawner" type="Node3D" parent="." node_paths=PackedStringArray("player", "spawnpoints")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8278, 0.604012, 0)
 script = ExtResource("8_x5ji8")
+player = NodePath("../player")
 yeti_scene = ExtResource("7_v3hs3")
 spawnpoints = NodePath("../Spawnpoints")
 
@@ -194,19 +197,29 @@ shape = SubResource("BoxShape3D_v3hs3")
 [node name="Spawnpoints" type="Node3D" parent="."]
 
 [node name="Spawn1" type="Node3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.73552, 0, 10.7616)
 
 [node name="Spawn2" type="Node3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3971, 0, 2.51463)
+top_level = true
 
 [node name="Spawn3" type="Node3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, 19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, 0, 16.5)
+top_level = true
 
 [node name="Spawn4" type="Node3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, 0, -16.5)
+top_level = true
+
+[node name="Seconds Timer" type="Timer" parent="."]
+
+[node name="Minutes Timer" type="Timer" parent="."]
+wait_time = 60.0
 
 [connection signal="deal_damage" from="player" to="YetiEnemy" method="_on_player_deal_damage"]
 [connection signal="highlight_enemy" from="player" to="YetiEnemy" method="_on_player_highlight_enemy"]
 [connection signal="timeout" from="player/ReloadTimer" to="player" method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="player/Ability1Cooldown" to="player" method="_on_ability_1_cooldown_timeout"]
 [connection signal="timeout" from="EnemySpawner/YetiTimer" to="EnemySpawner" method="_on_yeti_timer_timeout"]
+[connection signal="timeout" from="Seconds Timer" to="." method="_on_seconds_timer_timeout"]
+[connection signal="timeout" from="Minutes Timer" to="." method="_on_minutes_timer_timeout"]

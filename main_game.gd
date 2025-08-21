@@ -1,7 +1,40 @@
 extends Node3D
 
 @onready var player = $player
+@export var secondsTimer : Timer
+@export var minutesTimer: Timer 
+var seconds : int = 60 
+var minutes : int = 29
+var wave : int = 1
+var max_wave : int = 30
+func _ready():
+	#secondsTimer.start()
+	#minutesTimer.start()
+	pass
+
+func _on_seconds_timer_timeout() -> void:
+	seconds -= 1
+	if minutes >= 10:
+		if seconds >= 10:
+			print(str(minutes),":", str(seconds))
+		elif seconds < 10:
+			print(str(minutes),":", "0" + str(seconds))
+	elif minutes < 10:
+		if seconds >= 10:
+			print("0" + str(minutes),":", str(seconds))
+		elif seconds < 10:
+			print("0" + str(minutes),":", "0" + str(seconds))
+	
+
+func _on_minutes_timer_timeout() -> void:
+	minutes -= 1 
+	seconds = 60  
+	wave = minutes - max_wave
+	
+####
 func _physics_process(delta: float) -> void:
 	get_tree().call_group("enemy", "update_target_location", player.global_transform.origin)
 
-	
+
+
+			
