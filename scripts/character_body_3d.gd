@@ -77,6 +77,7 @@ func _physics_process(delta: float) -> void:
 			ability_1_usable = false
 			ability_1_cooldown_timer.start()
 			if crosshair_raycast.is_colliding():
+				print("colliding")
 				var hit = crosshair_raycast.get_collider()
 				emit_signal("deal_damage", hit, 10)
 		else:

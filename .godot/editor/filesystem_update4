@@ -1,5 +1,7 @@
 res://MainGame.tscn
 res://outline.gdshader
 res://monkey_weighted.gdshader
-res://enemy_spawner.gd
 res://yeti_enemy.tscn
+res://enemy_spawner.gd
+res://scripts/evilGuy.gd
+res://scripts/character_body_3d.gd

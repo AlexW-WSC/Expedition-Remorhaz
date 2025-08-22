@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhgljm2ocjttf"]
+[gd_scene load_steps=7 format=3 uid="uid://dhgljm2ocjttf"]
 
 [ext_resource type="Script" uid="uid://owub6agj5s3n" path="res://scripts/evilGuy.gd" id="1_3by50"]
 [ext_resource type="Shader" uid="uid://f65ydlo2jm83" path="res://outline.gdshader" id="3_r83iu"]
@@ -13,6 +13,10 @@ shader_parameter/outline_brightness = 1.0
 [sub_resource type="BoxMesh" id="BoxMesh_bqqt8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8dnxm"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fho4y"]
+height = 8.0
+radius = 10.0
 
 [node name="YetiEnemy" type="CharacterBody3D" groups=["enemy"]]
 transform = Transform3D(0.999998, 0.000796807, -0.00179283, -0.000800005, 0.999998, -0.00178498, 0.00179141, 0.00178641, 0.999997, 0, 0, 0)
@@ -29,3 +33,11 @@ shape = SubResource("BoxShape3D_8dnxm")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true
+
+[node name="Area3D" type="Area3D" parent="." groups=["player"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_fho4y")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

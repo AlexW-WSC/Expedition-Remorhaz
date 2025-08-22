@@ -1,9 +1,10 @@
-Timer
-Node3D
 CollisionShape3D
 MeshInstance3D
-StaticBody3D
 Area3D
+ShapeCast3D
+Timer
+Node3D
+StaticBody3D
 NavigationAgent3D
 NavigationRegion3D
 Sprite2D
@@ -11,4 +12,3 @@ CanvasLayer
 Label
 TextureRect
 CenterContainer
-RichTextLabel

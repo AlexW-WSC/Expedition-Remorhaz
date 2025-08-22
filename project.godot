@@ -24,7 +24,7 @@ window/size/borderless=true
 
 [global_group]
 
-Player=""
+player=""
 
 [input]
 

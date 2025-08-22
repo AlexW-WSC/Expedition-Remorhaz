@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cv6yalmlvdhfa"]
+[gd_scene load_steps=23 format=3 uid="uid://cv6yalmlvdhfa"]
 
 [ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/character_body_3d.gd" id="1_3tbxw"]
 [ext_resource type="Script" uid="uid://frkrc0umc6o3" path="res://main_game.gd" id="1_pv6b4"]
@@ -54,11 +54,6 @@ uv1_scale = Vector3(4.2, 4.2, 4.2)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8qpgq"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v3hs3"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5ji8"]
-albedo_color = Color(1, 0, 0, 1)
-
 [sub_resource type="BoxMesh" id="BoxMesh_8dnxm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v3hs3"]
@@ -98,7 +93,7 @@ environment = SubResource("Environment_ws5ob")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast") groups=["Player"]]
+[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast") groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0408783, 0, 0.0176511)
 script = ExtResource("1_3tbxw")
 ability_1_cooldown_timer = NodePath("Ability1Cooldown")
@@ -169,11 +164,6 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="YetiEnemy" parent="." instance=ExtResource("7_v3hs3")]
-transform = Transform3D(0.999998, 0.000796805, -0.00179284, -0.000800005, 0.999998, -0.00178498, 0.00179141, 0.00178641, 0.999997, 2.83961, 0.487621, 1.447)
-white_material = SubResource("StandardMaterial3D_v3hs3")
-red_material = SubResource("StandardMaterial3D_x5ji8")
-
 [node name="EnemySpawner" type="Node3D" parent="." node_paths=PackedStringArray("player", "spawnpoints")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8278, 0.604012, 0)
 script = ExtResource("8_x5ji8")
@@ -216,8 +206,6 @@ top_level = true
 [node name="Minutes Timer" type="Timer" parent="."]
 wait_time = 60.0
 
-[connection signal="deal_damage" from="player" to="YetiEnemy" method="_on_player_deal_damage"]
-[connection signal="highlight_enemy" from="player" to="YetiEnemy" method="_on_player_highlight_enemy"]
 [connection signal="timeout" from="player/ReloadTimer" to="player" method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="player/Ability1Cooldown" to="player" method="_on_ability_1_cooldown_timeout"]
 [connection signal="timeout" from="EnemySpawner/YetiTimer" to="EnemySpawner" method="_on_yeti_timer_timeout"]

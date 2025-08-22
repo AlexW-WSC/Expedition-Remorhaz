@@ -5,7 +5,7 @@ extends Node3D
 @export var spawnpoints : Node3D
 @onready var mob_spawns: int = spawnpoints.get_child_count()
 var type = "Yeti"
-
+var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	prepare_spawn()
@@ -30,28 +30,22 @@ func spawn_type(type, mob_spawn_rounds, mob_wait_time):
 		var yeti_spawn2 = $"../Spawnpoints/Spawn2"
 		var yeti_spawn3 = $"../Spawnpoints/Spawn3"
 		var yeti_spawn4 = $"../Spawnpoints/Spawn4"
-		for i in mob_spawn_rounds:
-			print("i")
+
+		for i in range(4):
 			var yeti1 = yeti_scene.instantiate()
-			var yeti2 = yeti_scene.instantiate()
-			var yeti3 = yeti_scene.instantiate()
-			var yeti4 = yeti_scene.instantiate()
+			var spawn = rng.randi_range(1,4)
 			add_child(yeti1)
-			add_child(yeti2)
-			add_child(yeti3)
-			add_child(yeti4)
-			yeti1.global_position = yeti_spawn1.global_position
-			yeti2.global_position = yeti_spawn2.global_position
-			yeti3.global_position = yeti_spawn3.global_position
-			yeti4.global_position = yeti_spawn4.global_position
-
-
+			if spawn == 1:
+				yeti1.global_position = yeti_spawn1.global_position
+			elif spawn == 2:
+				yeti1.global_position = yeti_spawn2.global_position
+			elif spawn == 3:
+				yeti1.global_position = yeti_spawn3.global_position
+			elif spawn == 4:
+				yeti1.global_position = yeti_spawn4.global_position
+			#assign them!!!
 			player.highlight_enemy.connect(Callable(yeti1, "_on_player_highlight_enemy"))
-			player.deal_damage.connect(Callable(yeti1, "on_player_deal_damage"))
-			
-			player.highlight_enemy.connect(Callable(yeti2, "_on_player_highlight_enemy"))
-			player.deal_damage.connect(Callable(yeti2, "on_player_deal_damage"))
-			mob_spawn_rounds -= 1
+			player.deal_damage.connect(Callable(yeti1, "_on_player_deal_damage"))			
 			await get_tree().create_timer(mob_wait_time).timeout
 			
 		
