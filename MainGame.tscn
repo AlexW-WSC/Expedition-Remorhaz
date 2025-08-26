@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://cv6yalmlvdhfa"]
+[gd_scene load_steps=24 format=3 uid="uid://cv6yalmlvdhfa"]
 
 [ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/character_body_3d.gd" id="1_3tbxw"]
 [ext_resource type="Script" uid="uid://frkrc0umc6o3" path="res://main_game.gd" id="1_pv6b4"]
 [ext_resource type="Texture2D" uid="uid://oph734p5l0am" path="res://icon.svg" id="2_bqqt8"]
 [ext_resource type="Texture2D" uid="uid://y4jlq6bn2on3" path="res://crosshair.png" id="4_8dnxm"]
+[ext_resource type="PackedScene" uid="uid://bjmdyvmdf13iv" path="res://yeti_ranger_enemy.tscn" id="7_8dnxm"]
 [ext_resource type="PackedScene" uid="uid://dhgljm2ocjttf" path="res://yeti_enemy.tscn" id="7_v3hs3"]
 [ext_resource type="Script" uid="uid://da3usqhb6ruuv" path="res://enemy_spawner.gd" id="8_x5ji8"]
 
@@ -169,6 +170,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8278, 0.604012, 0)
 script = ExtResource("8_x5ji8")
 player = NodePath("../player")
 yeti_scene = ExtResource("7_v3hs3")
+yeti_ranger_scene = ExtResource("7_8dnxm")
 spawnpoints = NodePath("../Spawnpoints")
 
 [node name="YetiTimer" type="Timer" parent="EnemySpawner"]
@@ -206,6 +208,7 @@ top_level = true
 [node name="Minutes Timer" type="Timer" parent="."]
 wait_time = 60.0
 
+[connection signal="current_wave" from="." to="EnemySpawner" method="_on_current_wave_changed"]
 [connection signal="timeout" from="player/ReloadTimer" to="player" method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="player/Ability1Cooldown" to="player" method="_on_ability_1_cooldown_timeout"]
 [connection signal="timeout" from="EnemySpawner/YetiTimer" to="EnemySpawner" method="_on_yeti_timer_timeout"]

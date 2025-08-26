@@ -1,5 +1,7 @@
 extends Node3D
 
+signal current_wave
+
 @onready var player = $player
 @export var secondsTimer : Timer
 @export var minutesTimer: Timer 
@@ -30,6 +32,8 @@ func _on_minutes_timer_timeout() -> void:
 	minutes -= 1 
 	seconds = 60  
 	wave = minutes - max_wave
+	current_wave.emit(wave)
+	
 	
 ####
 func _physics_process(delta: float) -> void:
