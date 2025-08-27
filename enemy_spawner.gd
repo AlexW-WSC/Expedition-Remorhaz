@@ -12,11 +12,13 @@ var area = null
 var type = "Yeti"
 var rng = RandomNumberGenerator.new()
 
+func _ready() -> void:
+	await get_tree().create_timer(5).timeout
+	_on_current_wave_changed(1)
 
 func _process(delta: float) -> void:
-	print(current_wave)
 	if Input.is_action_just_pressed("debug_m_key"):
-		_on_current_wave_changed(1)
+		pass
 	
 
 func _on_current_wave_changed(wave) -> void:
@@ -38,7 +40,7 @@ func _on_yeti_timer_timeout() -> void:
 
 func prepare_spawn(current_wave):
 	if current_wave == 1:
-		spawn_logic(30, "Yeti", 0.75, "Yeti Ranger", 0.25, null, 0, null, 0, area)
+		spawn_logic(10, "Yeti", 0.75, "Yeti Ranger", 0.25, null, 0, null, 0, area)
 	elif current_wave == 2:
 		spawn_logic(50, "Yeti", 0.75, "Yeti Ranger", 0.25, null, 0, null, 0, area)
 	elif current_wave == 3: 
@@ -68,23 +70,23 @@ func spawn_logic(mob_amount, mob1_type, mob1_weight, mob2_type, mob2_weight, mob
 	else:
 		"HUH"
 	
-	var mob1 = assign_mob(mob1_type)
-	var mob2 = assign_mob(mob2_type)
-	var mob3 = assign_mob(mob3_type)
-	var mob4 = assign_mob(mob4_type)
+	
+	
+
 	
 	var mob1_amount = floor(mob_amount * mob1_weight)
 	var mob2_amount = floor(mob_amount * mob2_weight)
 	var mob3_amount = floor(mob_amount * mob3_weight)
 	var mob4_amount = floor(mob_amount * mob4_weight)
 	
-	var mob_wait_time : float = mob_amount/60
-	print(mob_wait_time)
+	var mob_wait_time : float = 60/mob_amount 
+	print("wait time: !!!", mob_wait_time)
 	
 	while current_wave == wave:
 		var mob_spawned = rng.randi_range(1,4)
 		if mob_spawned == 1:
 			if mob1_amount != 0:
+				var mob1 = assign_mob(mob1_type)
 				add_child(mob1)
 				player.highlight_enemy.connect(Callable(mob1, "_on_player_highlight_enemy"))
 				player.deal_damage.connect(Callable(mob1, "_on_player_deal_damage"))
@@ -97,9 +99,12 @@ func spawn_logic(mob_amount, mob1_type, mob1_weight, mob2_type, mob2_weight, mob
 					mob1.global_position = spawn3.global_position
 				elif spawn == 4:
 					mob1.global_position = spawn4.global_position
+				mob1_amount -= 1
 				await get_tree().create_timer(mob_wait_time).timeout
+				print("spawned mob1")
 		if mob_spawned == 2:			
 			if mob2_amount != 0:
+				var mob2 = assign_mob(mob2_type)
 				add_child(mob2)
 				player.highlight_enemy.connect(Callable(mob2, "_on_player_highlight_enemy"))
 				player.deal_damage.connect(Callable(mob2, "_on_player_deal_damage"))
@@ -112,9 +117,12 @@ func spawn_logic(mob_amount, mob1_type, mob1_weight, mob2_type, mob2_weight, mob
 					mob2.global_position = spawn3.global_position
 				elif spawn == 4:
 					mob2.global_position = spawn4.global_position
+				mob2_amount -= 1
 				await get_tree().create_timer(mob_wait_time).timeout
+				print("spawned mob2")
 		if mob_spawned == 3:			
 			if mob3_amount != 0:
+				var mob3 = assign_mob(mob3_type)
 				add_child(mob3)
 				player.highlight_enemy.connect(Callable(mob3, "_on_player_highlight_enemy"))
 				player.deal_damage.connect(Callable(mob3, "_on_player_deal_damage"))
@@ -127,12 +135,15 @@ func spawn_logic(mob_amount, mob1_type, mob1_weight, mob2_type, mob2_weight, mob
 					mob3.global_position = spawn3.global_position
 				elif spawn == 4:
 					mob3.global_position = spawn4.global_position
+				mob3_amount -= 1
 				await get_tree().create_timer(mob_wait_time).timeout
+				print("spawned mob3")
 		if mob_spawned == 4:		
 			if mob4_amount != 0:
+				var mob4 = assign_mob(mob4_type)
 				add_child(mob4)
-				player.highlight_enemy.connect(Callable(mob3, "_on_player_highlight_enemy"))
-				player.deal_damage.connect(Callable(mob3, "_on_player_deal_damage"))
+				player.highlight_enemy.connect(Callable(mob4, "_on_player_highlight_enemy"))
+				player.deal_damage.connect(Callable(mob4, "_on_player_deal_damage"))
 				var spawn = rng.randi_range(1,spawn_location_amount)
 				if spawn == 1:
 					mob4.global_position = spawn1.global_position
@@ -142,7 +153,9 @@ func spawn_logic(mob_amount, mob1_type, mob1_weight, mob2_type, mob2_weight, mob
 					mob4.global_position = spawn3.global_position
 				elif spawn == 4:
 					mob4.global_position = spawn4.global_position
+				mob4_amount -= 1
 				await get_tree().create_timer(mob_wait_time).timeout
+				print("spawned mob4")
 					
 			else:
 				pass

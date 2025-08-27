@@ -10,8 +10,8 @@ var minutes : int = 29
 var wave : int = 1
 var max_wave : int = 30
 func _ready():
-	#secondsTimer.start()
-	#minutesTimer.start()
+	secondsTimer.start()
+	minutesTimer.start()
 	pass
 
 func _on_seconds_timer_timeout() -> void:

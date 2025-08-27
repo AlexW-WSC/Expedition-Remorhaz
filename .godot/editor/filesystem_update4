@@ -1,7 +1,8 @@
 res://MainGame.tscn
+res://scripts/evilGuy.gd
 res://outline.gdshader
 res://monkey_weighted.gdshader
-res://yeti_enemy.tscn
-res://main_game.gd
-res://enemy_spawner.gd
 res://yeti_ranger_enemy.tscn
+res://scripts/character_body_3d.gd
+res://yeti_enemy.tscn
+res://enemy_spawner.gd
