@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bjmdyvmdf13iv"]
 
-[ext_resource type="Script" uid="uid://owub6agj5s3n" path="res://scripts/evilGuy.gd" id="1_qeujw"]
+[ext_resource type="Script" uid="uid://owub6agj5s3n" path="res://scripts/melee_yeti.gd" id="1_qeujw"]
 [ext_resource type="Shader" uid="uid://f65ydlo2jm83" path="res://outline.gdshader" id="2_oe4hk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fho4y"]

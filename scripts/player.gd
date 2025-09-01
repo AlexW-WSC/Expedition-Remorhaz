@@ -4,6 +4,7 @@ signal deal_damage
 @warning_ignore("unused_signal")
 signal highlight_enemy
 
+var player_health  := 100.0
 const SPEED = (100 / 20)
 const JUMP_VELOCITY = 4.5
 const SENSITIVITY = 500
@@ -121,6 +122,14 @@ func _input(event):
 
 func _on_ability_1_cooldown_timeout() -> void:
 	ability_1_usable = true
+	
+
+func _on_damaged_by_enemy(damage):
+	player_health -= damage
+	print(damage)
+	print(player_health)
+	if player_health <= 0:
+		print("AAAAAAAHHHHHHHH")
 
 
 	

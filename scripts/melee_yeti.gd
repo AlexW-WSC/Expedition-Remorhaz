@@ -6,11 +6,13 @@ const SPEED = 2.0
 const TURN_SPEED = 4.0
 const GRAVITY = 9.8
 
-signal damage_player
+signal damage_player(player_body, damage_amount)
 
 var attacking : bool = false
 var sees_player : bool = false
 var ai_mode = 1
+
+@onready var player = get_tree().get_first_node_in_group("player")
 
 var player_in_hurtbox = false
 var can_attack : bool = true
@@ -67,16 +69,19 @@ void fragment() {
 
 @onready var navigation_agent : NavigationAgent3D = $NavigationAgent3D
 @onready var area_3d : Area3D = $Area3D
-var player : Node3D
+var player_body
 
 func _ready() -> void:
 	print(self)
-	# Create new Shader resource and assign code
+	print(player)
+	# Create new Shader resource!!
 	var shader = Shader.new()
 	shader.code = outline_shader_code
 	shader_material = ShaderMaterial.new()
 	shader_material.shader = shader
 	mesh.material_overlay = shader_material
+	self.damage_player.connect(Callable(player, "_on_damaged_by_enemy"))
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -96,7 +101,7 @@ func _physics_process(delta: float) -> void:
 		rotation.y = locked_rotation_y
 	
 	if hurtbox_enabled == true:
-		if hurtbox.overlaps_body(player):
+		if hurtbox.overlaps_body(player_body):
 			emit_signal("damage_player", melee_attack_damage)
 			hurtbox_enabled = false
 	
@@ -125,6 +130,7 @@ func move_randomly():
 		
 
 func melee_attack() -> void: 
+	can_attack = false
 	attacking = true
 	navigation_agent.set_target_position(self.global_position)
 	await get_tree().create_timer(attack_windup).timeout
@@ -139,7 +145,6 @@ func melee_attack() -> void:
 	print("done attack ^-^")
 	await get_tree().create_timer(attack_winddown).timeout
 	attacking = false
-	can_attack = false
 	cooldown_timer.start()
 
 func _process(delta: float) -> void:
@@ -170,7 +175,7 @@ func _on_player_highlight_enemy(hit) -> void:
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
-		player = body
+		player_body = body
 		sees_player = true
 		print('WOAH there buddy')
 
@@ -183,7 +188,7 @@ func _on_area_3d_body_exited(body: Node3D) -> void:
 
 
 func _on_hurtbox_body_entered(body: Node3D) -> void:
-	if player == body:
+	if player_body == body:
 		print("meow meow meow meow meow meow ")
 		player_in_hurtbox = true
 		

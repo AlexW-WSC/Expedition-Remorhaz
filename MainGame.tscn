@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://cv6yalmlvdhfa"]
 
-[ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/character_body_3d.gd" id="1_3tbxw"]
+[ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/player.gd" id="1_3tbxw"]
 [ext_resource type="Script" uid="uid://frkrc0umc6o3" path="res://main_game.gd" id="1_pv6b4"]
 [ext_resource type="Texture2D" uid="uid://oph734p5l0am" path="res://icon.svg" id="2_bqqt8"]
 [ext_resource type="Texture2D" uid="uid://y4jlq6bn2on3" path="res://crosshair.png" id="4_8dnxm"]

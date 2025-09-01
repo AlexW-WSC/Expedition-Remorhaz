@@ -31,7 +31,8 @@ func _on_seconds_timer_timeout() -> void:
 func _on_minutes_timer_timeout() -> void:
 	minutes -= 1 
 	seconds = 60  
-	wave = minutes - max_wave
+	wave = max_wave - minutes
+	print(wave)
 	current_wave.emit(wave)
 	
 	
