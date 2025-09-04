@@ -1,0 +1,128 @@
+[gd_scene load_steps=9 format=3 uid="uid://cr2w1348wljue"]
+
+[ext_resource type="PackedScene" uid="uid://cp6my5b6ml3k8" path="res://models/VentoFinal.blend" id="1_mrhls"]
+[ext_resource type="Texture2D" uid="uid://y4jlq6bn2on3" path="res://textures/crosshair.png" id="2_0xo2e"]
+[ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/player.gd" id="2_4ee51"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ee51"]
+size = Vector3(1, 2.14319, 0.687378)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ep6lb"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0xo2e"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ep6lb"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ep6lb"]
+graph_offset = Vector2(-224.698, -26.6952)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_0xo2e")
+"nodes/Animation 2/position" = Vector2(-130, 180)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ep6lb")
+nodes/TimeScale/position = Vector2(450, 190)
+nodes/output/position = Vector2(670, 130)
+node_connections = [&"TimeScale", 0, &"Animation 2", &"output", 0, &"TimeScale"]
+
+[node name="VentoPlayer" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast") instance=ExtResource("1_mrhls")]
+script = ExtResource("2_4ee51")
+ability_1_cooldown_timer = NodePath("Ability1Cooldown")
+reload_timer = NodePath("ReloadTimer")
+ability_1_cooldown_display = NodePath("Ability1CooldownDisplay")
+bullet_display = NodePath("BulletsInMagDisplay")
+crosshair_raycast = NodePath("CameraPivot/Camera3D/PlayerRaycast")
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/position = Vector3(-0.00493563, 1.08071, 0.08294)
+bones/0/rotation = Quaternion(0.100494, -0.699991, -0.0968503, 0.700381)
+bones/1/rotation = Quaternion(-0.00630654, 0.000133814, 0.00197271, 0.999978)
+bones/3/rotation = Quaternion(-0.660838, -0.0356491, -0.419216, 0.621514)
+bones/4/rotation = Quaternion(-0.0342059, 0.0982978, -0.228433, 0.96798)
+bones/5/rotation = Quaternion(0.923792, 0.382853, -0.00564379, 0.00112268)
+bones/5/scale = Vector3(1.00004, 1.00001, 1)
+bones/6/rotation = Quaternion(-0.000168088, 0.000161256, 0.00294963, 0.999996)
+bones/6/scale = Vector3(1.00002, 0.999972, 1)
+bones/7/rotation = Quaternion(0.00234895, -0.068458, -0.61377, 0.786508)
+bones/7/scale = Vector3(1.00004, 0.999978, 1)
+bones/8/rotation = Quaternion(0.0138017, 0.666199, 0.74552, -0.0137422)
+bones/9/rotation = Quaternion(-0.355418, 0.170841, 0.336696, 0.85506)
+bones/10/rotation = Quaternion(-0.332434, 0.0296272, 0.239743, 0.911665)
+bones/11/position = Vector3(-0.0575184, 0.424762, -0.00337838)
+bones/11/rotation = Quaternion(-0.292102, 0.131274, -0.17227, 0.93154)
+bones/12/rotation = Quaternion(0.0101534, 0.0285513, 0.993756, 0.107381)
+bones/12/scale = Vector3(1.00007, 0.999993, 1)
+bones/13/rotation = Quaternion(-0.0371221, -0.000122943, -0.651642, 0.757618)
+bones/14/rotation = Quaternion(-0.0388155, -0.0612755, 0.606275, 0.79194)
+bones/14/scale = Vector3(0.999994, 1.00003, 0.999998)
+bones/15/position = Vector3(0.174128, 0.622434, 0.389907)
+bones/16/position = Vector3(0.17783, -0.0166249, 0.645146)
+bones/16/rotation = Quaternion(-0.37383, 0.599616, -0.37263, 0.601547)
+bones/17/position = Vector3(-0.174128, 0.622434, 0.389197)
+bones/17/rotation = Quaternion(-0.497424, 0.502563, 0.502563, -0.497424)
+bones/18/position = Vector3(-0.175416, 0.903318, -0.691941)
+bones/18/rotation = Quaternion(-0.69394, 0.14116, 0.691713, -0.141615)
+
+[node name="ReloadTimer" type="Timer" parent="." index="2"]
+
+[node name="Ability1Cooldown" type="Timer" parent="." index="3"]
+wait_time = 0.25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00313997, 1.06854, 0.0548158)
+shape = SubResource("BoxShape3D_4ee51")
+
+[node name="CameraPivot" type="Node3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99277, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.917819, -0.105693, 1.447)
+fov = 90.0
+
+[node name="PlayerRaycast" type="RayCast3D" parent="CameraPivot/Camera3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, -10, 0)
+
+[node name="Ability1CooldownDisplay" type="Label" parent="." index="6"]
+offset_right = 65.0
+offset_bottom = 23.0
+text = "TEXTTTT"
+label_settings = SubResource("LabelSettings_ep6lb")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="." index="7"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 190.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = ExtResource("2_0xo2e")
+
+[node name="BulletsInMagDisplay" type="Label" parent="." index="8"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="9"]
+tree_root = SubResource("AnimationNodeBlendTree_ep6lb")
+anim_player = NodePath("../AnimationPlayer")
+parameters/TimeScale/scale = 1.0
+
+[connection signal="timeout" from="Ability1Cooldown" to="." method="_on_ability_1_cooldown_timeout"]

@@ -2,7 +2,7 @@ extends Node3D
 
 signal current_wave
 
-@onready var player = $player
+@onready var player = $VentoPlayer
 @export var secondsTimer : Timer
 @export var minutesTimer: Timer 
 var seconds : int = 60 

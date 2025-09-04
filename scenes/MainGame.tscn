@@ -1,12 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://cv6yalmlvdhfa"]
+[gd_scene load_steps=19 format=3 uid="uid://cv6yalmlvdhfa"]
 
-[ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/player.gd" id="1_3tbxw"]
-[ext_resource type="Script" uid="uid://frkrc0umc6o3" path="res://main_game.gd" id="1_pv6b4"]
-[ext_resource type="Texture2D" uid="uid://oph734p5l0am" path="res://icon.svg" id="2_bqqt8"]
-[ext_resource type="Texture2D" uid="uid://y4jlq6bn2on3" path="res://crosshair.png" id="4_8dnxm"]
-[ext_resource type="PackedScene" uid="uid://bjmdyvmdf13iv" path="res://yeti_ranger_enemy.tscn" id="7_8dnxm"]
-[ext_resource type="PackedScene" uid="uid://dhgljm2ocjttf" path="res://yeti_enemy.tscn" id="7_v3hs3"]
-[ext_resource type="Script" uid="uid://da3usqhb6ruuv" path="res://enemy_spawner.gd" id="8_x5ji8"]
+[ext_resource type="Script" uid="uid://frkrc0umc6o3" path="res://scripts/main_game.gd" id="1_fpdtd"]
+[ext_resource type="Texture2D" uid="uid://oph734p5l0am" path="res://textures/icon.svg" id="2_1hpqh"]
+[ext_resource type="Script" uid="uid://da3usqhb6ruuv" path="res://scripts/enemy_spawner.gd" id="5_vs82q"]
+[ext_resource type="PackedScene" uid="uid://cr2w1348wljue" path="res://scenes/vento_player.tscn" id="6_7fyak"]
+[ext_resource type="PackedScene" uid="uid://dhgljm2ocjttf" path="res://scenes/yeti_enemy.tscn" id="6_qsiih"]
+[ext_resource type="PackedScene" uid="uid://bjmdyvmdf13iv" path="res://scenes/yeti_ranger_enemy.tscn" id="7_7d840"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_8dnxm"]
 vertices = PackedVector3Array(13.0392, 0.1, -6.98175, 11.4392, 0.1, -5.38175, 17.4393, 0.1, 16.6183, 7.83925, 4.95, -10.5817, 7.83925, 4.95, -9.38175, 9.03925, 4.95, -9.38175, 9.03925, 4.95, -10.5817, 17.4393, 0.1, -16.9817, 13.0392, 0.1, -9.78175, 4.63925, 0.1, -5.78175, 3.83925, 0.1, -6.98175, -16.9608, 0.1, -16.9817, -16.9608, 0.1, 16.6183, 3.83925, 0.1, -12.9817, 5.43925, 0.1, -14.5817, 12.2393, 0.1, -14.1817, 13.0392, 0.1, -12.9817, 7.83925, 0.1, -14.5817)
@@ -24,8 +23,8 @@ albedo_color = Color(0.32549, 0.537255, 0.101961, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8dnxm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dnxm"]
-albedo_texture = ExtResource("2_bqqt8")
-normal_texture = ExtResource("2_bqqt8")
+albedo_texture = ExtResource("2_1hpqh")
+normal_texture = ExtResource("2_1hpqh")
 
 [sub_resource type="BoxMesh" id="BoxMesh_v3hs3"]
 
@@ -46,21 +45,12 @@ sky = SubResource("Sky_e3m3f")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ws5ob"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pv6b4"]
-uv1_scale = Vector3(4.2, 4.2, 4.2)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bqqt8"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_8qpgq"]
-
 [sub_resource type="BoxMesh" id="BoxMesh_8dnxm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v3hs3"]
 
 [node name="Node3D" type="Node3D" node_paths=PackedStringArray("secondsTimer", "minutesTimer")]
-script = ExtResource("1_pv6b4")
+script = ExtResource("1_fpdtd")
 secondsTimer = NodePath("Seconds Timer")
 minutesTimer = NodePath("Minutes Timer")
 
@@ -94,83 +84,11 @@ environment = SubResource("Environment_ws5ob")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast") groups=["player"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0408783, 0, 0.0176511)
-script = ExtResource("1_3tbxw")
-ability_1_cooldown_timer = NodePath("Ability1Cooldown")
-reload_timer = NodePath("ReloadTimer")
-ability_1_cooldown_display = NodePath("Ability1CooldownDisplay")
-bullet_display = NodePath("BulletsInMagDisplay")
-crosshair_raycast = NodePath("CameraPivot/Camera3D/PlayerRaycast")
-
-[node name="ReloadTimer" type="Timer" parent="player"]
-
-[node name="Ability1Cooldown" type="Timer" parent="player"]
-wait_time = 0.25
-one_shot = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_ws5ob")
-surface_material_override/0 = SubResource("StandardMaterial3D_pv6b4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_bqqt8")
-
-[node name="CameraPivot" type="Node3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99277, 0)
-
-[node name="Camera3D" type="Camera3D" parent="player/CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.917819, -0.105693, 1.447)
-fov = 90.0
-
-[node name="PlayerRaycast" type="RayCast3D" parent="player/CameraPivot/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-target_position = Vector3(0, -10, 0)
-
-[node name="Ability1CooldownDisplay" type="Label" parent="player"]
-offset_right = 65.0
-offset_bottom = 23.0
-text = "TEXTTTT"
-label_settings = SubResource("LabelSettings_8qpgq")
-horizontal_alignment = 2
-vertical_alignment = 2
-
-[node name="TextureRect" type="TextureRect" parent="player"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 190.0
-offset_bottom = 190.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.1, 0.1)
-size_flags_horizontal = 8
-size_flags_vertical = 4
-texture = ExtResource("4_8dnxm")
-
-[node name="BulletsInMagDisplay" type="Label" parent="player"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -23.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="EnemySpawner" type="Node3D" parent="." node_paths=PackedStringArray("player", "spawnpoints")]
+[node name="EnemySpawner" type="Node3D" parent="." node_paths=PackedStringArray("spawnpoints")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8278, 0.604012, 0)
-script = ExtResource("8_x5ji8")
-player = NodePath("../player")
-yeti_scene = ExtResource("7_v3hs3")
-yeti_ranger_scene = ExtResource("7_8dnxm")
+script = ExtResource("5_vs82q")
+yeti_scene = ExtResource("6_qsiih")
+yeti_ranger_scene = ExtResource("7_7d840")
 spawnpoints = NodePath("../Spawnpoints")
 
 [node name="YetiTimer" type="Timer" parent="EnemySpawner"]
@@ -208,9 +126,9 @@ top_level = true
 [node name="Minutes Timer" type="Timer" parent="."]
 wait_time = 60.0
 
+[node name="VentoPlayer" parent="." groups=["player"] instance=ExtResource("6_7fyak")]
+
 [connection signal="current_wave" from="." to="EnemySpawner" method="_on_current_wave_changed"]
-[connection signal="timeout" from="player/ReloadTimer" to="player" method="_on_reload_timer_timeout"]
-[connection signal="timeout" from="player/Ability1Cooldown" to="player" method="_on_ability_1_cooldown_timeout"]
 [connection signal="timeout" from="EnemySpawner/YetiTimer" to="EnemySpawner" method="_on_yeti_timer_timeout"]
 [connection signal="timeout" from="Seconds Timer" to="." method="_on_seconds_timer_timeout"]
 [connection signal="timeout" from="Minutes Timer" to="." method="_on_minutes_timer_timeout"]

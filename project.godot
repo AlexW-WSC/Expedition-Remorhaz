@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Expedition: Remorhaz"
-run/main_scene="res://MainGame.tscn"
+run/main_scene="res://scenes/MainGame.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://textures/icon.svg"
 
 [display]
 

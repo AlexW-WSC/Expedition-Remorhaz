@@ -1,7 +1,7 @@
 extends Node3D
 var current_wave = null
 var area = null
-@export var player: CharacterBody3D
+@onready var player = get_tree().get_first_node_in_group("player")
 
 
 @export var yeti_scene: PackedScene

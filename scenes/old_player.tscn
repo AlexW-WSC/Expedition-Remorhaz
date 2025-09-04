@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3tc3up128fe0"]
+
+[ext_resource type="Script" uid="uid://pafbihw5vvlk" path="res://scripts/player.gd" id="1_kqxin"]
+[ext_resource type="Texture2D" uid="uid://y4jlq6bn2on3" path="res://textures/crosshair.png" id="2_ecmyi"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ws5ob"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pv6b4"]
+uv1_scale = Vector3(4.2, 4.2, 4.2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bqqt8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8qpgq"]
+
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast") groups=["player"]]
+script = ExtResource("1_kqxin")
+ability_1_cooldown_timer = NodePath("Ability1Cooldown")
+reload_timer = NodePath("ReloadTimer")
+ability_1_cooldown_display = NodePath("Ability1CooldownDisplay")
+bullet_display = NodePath("BulletsInMagDisplay")
+crosshair_raycast = NodePath("CameraPivot/Camera3D/PlayerRaycast")
+
+[node name="ReloadTimer" type="Timer" parent="."]
+
+[node name="Ability1Cooldown" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_ws5ob")
+surface_material_override/0 = SubResource("StandardMaterial3D_pv6b4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_bqqt8")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99277, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.917819, -0.105693, 1.447)
+fov = 90.0
+
+[node name="PlayerRaycast" type="RayCast3D" parent="CameraPivot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, -10, 0)
+
+[node name="Ability1CooldownDisplay" type="Label" parent="."]
+offset_right = 65.0
+offset_bottom = 23.0
+text = "TEXTTTT"
+label_settings = SubResource("LabelSettings_8qpgq")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 190.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = ExtResource("2_ecmyi")
+
+[node name="BulletsInMagDisplay" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="Ability1Cooldown" to="." method="_on_ability_1_cooldown_timeout"]
