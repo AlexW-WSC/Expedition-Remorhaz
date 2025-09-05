@@ -24,6 +24,8 @@ var last_highlighted = null
 
 @onready var target = self
 
+@onready var animation_tree = $AnimationTree
+
 func reload_weapon():
 	if bullets_in_mag != max_bullets_in_mag:
 		reload_timer.start()
@@ -50,6 +52,8 @@ func _process(delta: float) -> void:
 	bullet_display.text = (str(bullets_in_mag) + "/" + str(max_bullets_in_mag))
 
 func _physics_process(delta: float) -> void:
+	update_animation_parameters()
+	
 	if crosshair_raycast.is_colliding() == true:
 		var hit = crosshair_raycast.get_collider()
 		if hit != last_highlighted:
@@ -104,12 +108,15 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
+		animation_tree
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+	
+	if velocity == Vector3(0, 0, 0):
+		pass
 	move_and_slide()
 	
 	
@@ -131,5 +138,10 @@ func _on_damaged_by_enemy(damage):
 	if player_health <= 0:
 		print("AAAAAAAHHHHHHHH")
 
-
-	
+func update_animation_parameters():
+	if (velocity == Vector3.ZERO):
+		animation_tree["parameters/conditions/is_moving"] = false
+		animation_tree["parameters/conditions/idle"] = true
+	else:
+		animation_tree["parameters/conditions/is_moving"] = true
+		animation_tree["parameters/conditions/idle"] = false
