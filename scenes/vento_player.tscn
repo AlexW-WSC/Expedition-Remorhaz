@@ -37,13 +37,15 @@ states/run/position = Vector2(524.5, 99.25)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_ep6lb"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_as1fg"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_kbc5t")]
 graph_offset = Vector2(71.25, -38.625)
 
-[node name="VentoPlayer" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast") instance=ExtResource("1_mrhls")]
+[node name="VentoPlayer" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast", "look_at_modifier", "skeleton") instance=ExtResource("1_mrhls")]
 script = ExtResource("2_4ee51")
 ability_1_cooldown_timer = NodePath("Ability1Cooldown")
 reload_timer = NodePath("ReloadTimer")
 ability_1_cooldown_display = NodePath("Ability1CooldownDisplay")
 bullet_display = NodePath("BulletsInMagDisplay")
 crosshair_raycast = NodePath("CameraPivot/Camera3D/PlayerRaycast")
+look_at_modifier = NodePath("Armature/Skeleton3D/LookAtModifier3D")
+skeleton = NodePath("Armature/Skeleton3D")
 
 [node name="Armature" parent="." index="0"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
@@ -56,7 +58,7 @@ bones/3/rotation = Quaternion(-0.62994, -0.207252, -0.541157, 0.51708)
 bones/4/rotation = Quaternion(0.0622876, 0.0253362, -0.178508, 0.981638)
 bones/5/rotation = Quaternion(0.972086, 0.234027, -0.00920249, -0.0140147)
 bones/5/scale = Vector3(1.00006, 0.999999, 1)
-bones/6/rotation = Quaternion(-0.0186161, 0.000152573, 0.326787, 0.944915)
+bones/6/rotation = Quaternion(-0.0185673, 0.00015262, 0.325931, 0.945211)
 bones/6/scale = Vector3(1, 0.999999, 1)
 bones/7/rotation = Quaternion(-0.0320966, -0.0555107, -0.731374, 0.678956)
 bones/7/scale = Vector3(0.999997, 1.00002, 0.999999)
@@ -77,6 +79,10 @@ bones/17/position = Vector3(-0.174128, 0.622434, 0.342851)
 bones/17/rotation = Quaternion(-0.497424, 0.502563, 0.502563, -0.497424)
 bones/18/position = Vector3(-0.176341, 0.0616634, 0.00883541)
 bones/18/rotation = Quaternion(-0.500803, -0.499196, 0.499196, 0.500803)
+
+[node name="LookAtModifier3D" type="LookAtModifier3D" parent="Armature/Skeleton3D" index="4"]
+bone_name = "body_2"
+bone = 0
 
 [node name="AnimationPlayer" parent="." index="1"]
 blend_times = [&"idle", &"idle", 2.0, &"idle", &"run", 2.0]

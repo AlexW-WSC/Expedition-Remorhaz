@@ -26,6 +26,10 @@ var last_highlighted = null
 
 @onready var animation_tree = $AnimationTree
 
+@export var look_at_modifier : LookAtModifier3D
+
+@export var skeleton : Skeleton3D
+
 func reload_weapon():
 	if bullets_in_mag != max_bullets_in_mag:
 		reload_timer.start()
@@ -50,6 +54,7 @@ func _process(delta: float) -> void:
 		ability_1_cooldown_display.text = str(round(ability_1_cooldown_timer.time_left))
 		
 	bullet_display.text = (str(bullets_in_mag) + "/" + str(max_bullets_in_mag))
+	
 
 func _physics_process(delta: float) -> void:
 	update_animation_parameters()
@@ -120,11 +125,16 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	
+	
+	
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x / SENSITIVITY
 		$CameraPivot.rotation.x -= event.relative.y / SENSITIVITY
 		$CameraPivot.rotation.x = clamp($CameraPivot.rotation.x,deg_to_rad(-80),deg_to_rad(80))
+		var pivot_rotation = $CameraPivot.rotation.x 
+		print(pivot_rotation)
+		
 
 
 func _on_ability_1_cooldown_timeout() -> void:
