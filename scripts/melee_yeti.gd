@@ -2,6 +2,10 @@ extends CharacterBody3D
 var max_health := 40.0
 var health := max_health
 var melee_attack_damage := 5.0
+
+var xp_given := 1.0
+var gold_given := 10.0
+
 const SPEED = 2.0
 const TURN_SPEED = 4.0
 const GRAVITY = 9.8
@@ -25,7 +29,8 @@ var attack_cooldown : float = 10
 @onready var hurtbox_mesh = $Hurtbox/MeshInstance3D
 @onready var cooldown_timer = $AttackCooldown
 
-@onready var mesh = $MeshInstance3D
+@export var mesh1 : MeshInstance3D
+@export var mesh2 : MeshInstance3D
 var rng = RandomNumberGenerator.new()
 
 var outline_shader_code := """
@@ -152,7 +157,9 @@ func _process(delta: float) -> void:
 		melee_attack()
 		
 	if health <= 0:
-		self.queue_free()
+		print("particles!!!")
+		$GPUParticles3D.emitting = true
+		
 	
 		
 func _on_player_deal_damage(hit, damage) -> void:

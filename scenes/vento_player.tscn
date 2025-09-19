@@ -58,7 +58,7 @@ bones/3/rotation = Quaternion(-0.62994, -0.207252, -0.541157, 0.51708)
 bones/4/rotation = Quaternion(0.0622876, 0.0253362, -0.178508, 0.981638)
 bones/5/rotation = Quaternion(0.972086, 0.234027, -0.00920249, -0.0140147)
 bones/5/scale = Vector3(1.00006, 0.999999, 1)
-bones/6/rotation = Quaternion(-0.0185673, 0.00015262, 0.325931, 0.945211)
+bones/6/rotation = Quaternion(-0.0185954, 0.000152593, 0.326423, 0.945041)
 bones/6/scale = Vector3(1, 0.999999, 1)
 bones/7/rotation = Quaternion(-0.0320966, -0.0555107, -0.731374, 0.678956)
 bones/7/scale = Vector3(0.999997, 1.00002, 0.999999)
@@ -81,8 +81,10 @@ bones/18/position = Vector3(-0.176341, 0.0616634, 0.00883541)
 bones/18/rotation = Quaternion(-0.500803, -0.499196, 0.499196, 0.500803)
 
 [node name="LookAtModifier3D" type="LookAtModifier3D" parent="Armature/Skeleton3D" index="4"]
+target_node = NodePath("../../../CameraPivot/rotation_target")
 bone_name = "body_2"
 bone = 0
+forward_axis = 0
 
 [node name="AnimationPlayer" parent="." index="1"]
 blend_times = [&"idle", &"idle", 2.0, &"idle", &"run", 2.0]
@@ -97,7 +99,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00313997, 1.06854, 0.05481
 shape = SubResource("BoxShape3D_4ee51")
 
 [node name="CameraPivot" type="Node3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99277, 0)
+transform = Transform3D(0.999993, -0.00370009, 0, 0.00370009, 0.999993, 0, 0, 0, 1, -0.160956, 1.80318, -0.194724)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.917819, -0.105693, 1.447)
@@ -106,6 +108,9 @@ fov = 90.0
 [node name="PlayerRaycast" type="RayCast3D" parent="CameraPivot/Camera3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, -10, 0)
+
+[node name="rotation_target" type="Node3D" parent="CameraPivot" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.61649)
 
 [node name="Ability1CooldownDisplay" type="Label" parent="." index="6"]
 offset_right = 65.0

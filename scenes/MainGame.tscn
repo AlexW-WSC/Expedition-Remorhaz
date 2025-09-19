@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cv6yalmlvdhfa"]
+[gd_scene load_steps=20 format=3 uid="uid://cv6yalmlvdhfa"]
 
 [ext_resource type="Script" uid="uid://frkrc0umc6o3" path="res://scripts/main_game.gd" id="1_fpdtd"]
 [ext_resource type="Texture2D" uid="uid://oph734p5l0am" path="res://textures/icon.svg" id="2_1hpqh"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cr2w1348wljue" path="res://scenes/vento_player.tscn" id="6_7fyak"]
 [ext_resource type="PackedScene" uid="uid://dhgljm2ocjttf" path="res://scenes/yeti_enemy.tscn" id="6_qsiih"]
 [ext_resource type="PackedScene" uid="uid://bjmdyvmdf13iv" path="res://scenes/yeti_ranger_enemy.tscn" id="7_7d840"]
+[ext_resource type="PackedScene" uid="uid://uldg6tvdit4x" path="res://models/yetiV0.6.blend" id="7_fpdtd"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_8dnxm"]
 vertices = PackedVector3Array(13.0392, 0.1, -6.98175, 11.4392, 0.1, -5.38175, 17.4393, 0.1, 16.6183, 7.83925, 4.95, -10.5817, 7.83925, 4.95, -9.38175, 9.03925, 4.95, -9.38175, 9.03925, 4.95, -10.5817, 17.4393, 0.1, -16.9817, 13.0392, 0.1, -9.78175, 4.63925, 0.1, -5.78175, 3.83925, 0.1, -6.98175, -16.9608, 0.1, -16.9817, -16.9608, 0.1, 16.6183, 3.83925, 0.1, -12.9817, 5.43925, 0.1, -14.5817, 12.2393, 0.1, -14.1817, 13.0392, 0.1, -12.9817, 7.83925, 0.1, -14.5817)
@@ -127,6 +128,9 @@ top_level = true
 wait_time = 60.0
 
 [node name="VentoPlayer" parent="." groups=["player"] instance=ExtResource("6_7fyak")]
+
+[node name="yetiV0_6" parent="." instance=ExtResource("7_fpdtd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75343, 5951.26, 4.31585)
 
 [connection signal="current_wave" from="." to="EnemySpawner" method="_on_current_wave_changed"]
 [connection signal="timeout" from="EnemySpawner/YetiTimer" to="EnemySpawner" method="_on_yeti_timer_timeout"]

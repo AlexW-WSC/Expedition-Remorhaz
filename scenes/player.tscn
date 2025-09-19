@@ -82,5 +82,9 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[node name="GPUParticlesAttractorBox3D" type="GPUParticlesAttractorBox3D" parent="."]
+strength = 62.1
+size = Vector3(20, 20, 20)
+
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="Ability1Cooldown" to="." method="_on_ability_1_cooldown_timeout"]

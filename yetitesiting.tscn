@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://5i8a5c0clsyp"]
+
+[ext_resource type="PackedScene" uid="uid://uldg6tvdit4x" path="res://models/yetiV0.6.blend" id="1_uaera"]
+
+[node name="yetiV0_6" instance=ExtResource("1_uaera")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/position = Vector3(0.00822159, -0.149504, 0.097349)
+bones/0/rotation = Quaternion(-0.0924136, 0.68087, -0.0937203, 0.72048)
+bones/1/rotation = Quaternion(0.00416542, 0.000222123, 0.0775013, 0.996984)
+bones/3/rotation = Quaternion(0.410079, -0.713119, -0.0029814, 0.568584)
+bones/4/rotation = Quaternion(-0.758284, -0.0636233, -0.114016, 0.638716)
+bones/5/rotation = Quaternion(0.633675, 0.377418, -0.613059, 0.283144)
+bones/6/rotation = Quaternion(0.507294, -8.5691e-05, 0.0320444, 0.861177)
+bones/7/rotation = Quaternion(-0.737253, -0.048011, 0.0234238, 0.673501)
+bones/9/rotation = Quaternion(-0.256293, 0.065966, 0.378538, 0.886945)
+bones/10/rotation = Quaternion(0.297685, -0.139266, 0.569162, 0.753686)
+bones/11/rotation = Quaternion(-0.650509, 0.0226103, 0.754051, -0.0879412)
+bones/12/rotation = Quaternion(0.26873, 9.57362e-05, -0.016975, 0.963066)
+bones/13/rotation = Quaternion(-0.846833, 0.0666142, -0.0391502, 0.526216)
+bones/14/position = Vector3(-0.152544, -0.473087, -0.211868)
+bones/14/rotation = Quaternion(0.00743419, 0.707068, -0.707068, -0.00743437)
+bones/15/position = Vector3(-0.218591, -0.992908, -0.000734528)
+bones/15/rotation = Quaternion(-0.00586723, 0.707401, 0.706763, -0.00594095)
+bones/16/position = Vector3(0.152544, -0.473087, -0.211318)
+bones/17/position = Vector3(0.297761, -0.992339, 0.543845)
+bones/17/rotation = Quaternion(0.00588877, 0.707082, 0.707082, 0.00588877)
