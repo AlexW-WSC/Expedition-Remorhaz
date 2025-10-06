@@ -1,3 +1,4 @@
+AnimationTree
 MeshInstance3D
 CollisionShape3D
 Area3D
@@ -5,7 +6,6 @@ GPUParticlesAttractorBox3D
 GPUParticles3D
 Node3D
 LookAtModifier3D
-AnimationTree
 CharacterBody3D
 Timer
 ShapeCast3D

@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjmdyvmdf13iv"]
+[gd_scene load_steps=7 format=3 uid="uid://bjmdyvmdf13iv"]
 
-[ext_resource type="Script" uid="uid://owub6agj5s3n" path="res://scripts/melee_yeti.gd" id="1_qeujw"]
 [ext_resource type="Shader" uid="uid://f65ydlo2jm83" path="res://outline.gdshader" id="2_oe4hk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fho4y"]
@@ -24,7 +23,6 @@ radius = 10.0
 
 [node name="YetiEnemy" type="CharacterBody3D" groups=["enemy"]]
 transform = Transform3D(0.999998, 0.000796807, -0.00179283, -0.000800005, 0.999998, -0.00178498, 0.00179141, 0.00178641, 0.999997, 0, 0, 0)
-script = ExtResource("1_qeujw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, -6.45741e-11, 0, -2.95586e-12, 1, 0, -1.16415e-10, 0, 1, 0, 0, 0)

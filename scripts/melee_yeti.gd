@@ -16,6 +16,7 @@ var attacking : bool = false
 var sees_player : bool = false
 var ai_mode = 1
 
+@onready var animation_tree = $AnimationTree
 @onready var player = get_tree().get_first_node_in_group("player")
 
 var player_in_hurtbox = false
@@ -29,8 +30,8 @@ var attack_cooldown : float = 10
 @onready var hurtbox_mesh = $Hurtbox/MeshInstance3D
 @onready var cooldown_timer = $AttackCooldown
 
-@export var mesh1 : MeshInstance3D
-@export var mesh2 : MeshInstance3D
+@onready var mesh1 = $Armature/Skeleton3D/Body
+@onready var mesh2 = $Armature/Skeleton3D/Fur
 var rng = RandomNumberGenerator.new()
 
 var outline_shader_code := """
@@ -70,26 +71,37 @@ void fragment() {
 
 """
 
-@onready var shader_material : ShaderMaterial
+@onready var shader_material1 : ShaderMaterial
+@onready var shader_material2 : ShaderMaterial
 
 @onready var navigation_agent : NavigationAgent3D = $NavigationAgent3D
 @onready var area_3d : Area3D = $Area3D
 var player_body
 
 func _ready() -> void:
+	if mesh1 == null:
+		print("mesh1 is null! Check path: $Armature/Skeleton3D/Body")
+		return
+	if mesh2 == null:
+		print("mesh2 is null! Check path: $Armature/Skeleton3D/Fur")
+		return
 	print(self)
 	print(player)
 	# Create new Shader resource!!
 	var shader = Shader.new()
 	shader.code = outline_shader_code
-	shader_material = ShaderMaterial.new()
-	shader_material.shader = shader
-	mesh.material_overlay = shader_material
+	shader_material1 = ShaderMaterial.new()
+	shader_material1.shader = shader
+	shader_material2 = ShaderMaterial.new()
+	shader_material2.shader = shader
+	mesh1.material_overlay = shader_material1
+	mesh2.material_overlay = shader_material2
 	self.damage_player.connect(Callable(player, "_on_damaged_by_enemy"))
 	
 
 
 func _physics_process(delta: float) -> void:
+	update_animation_parameters()
 	var locked_rotation_y = rotation.y
 	var current_location = global_transform.origin
 	var next_location = navigation_agent.get_next_path_position()
@@ -141,11 +153,11 @@ func melee_attack() -> void:
 	await get_tree().create_timer(attack_windup).timeout
 	print("wound up")
 	hurtbox_enabled = true
-	var red_color = hurtbox_mesh.get_active_material(0)
-	red_color.albedo_color = Color(0,0,255)
+	#var red_color = hurtbox_mesh.get_active_material(0)
+	#red_color.albedo_color = Color(0,0,255)
 	
 	await get_tree().create_timer(attack_duration).timeout
-	red_color.albedo_color = Color(255,0,0)
+	#red_color.albedo_color = Color(255,0,0)
 	hurtbox_enabled = false
 	print("done attack ^-^")
 	await get_tree().create_timer(attack_winddown).timeout
@@ -159,6 +171,7 @@ func _process(delta: float) -> void:
 	if health <= 0:
 		print("particles!!!")
 		$GPUParticles3D.emitting = true
+		self.queue_free()
 		
 	
 		
@@ -168,16 +181,21 @@ func _on_player_deal_damage(hit, damage) -> void:
 		print("meow meow meow i have been hit!!!")
 		health -= damage
 		var brightness = clamp(health / max_health, 0.0, 1.0)
-		shader_material.set_shader_parameter("outline_brightness", brightness)
+		shader_material1.set_shader_parameter("outline_brightness", brightness)
+		shader_material2.set_shader_parameter("outline_brightness", brightness)
 			
 
 
 func _on_player_highlight_enemy(hit) -> void:
-	if hit == self:
-		print("I am being highlighted:", self)
-		shader_material.set_shader_parameter("outline_onoff", 1.0)
-	else:
-		shader_material.set_shader_parameter("outline_onoff", 0.0)
+	if shader_material1 != null and shader_material2 != null:
+		if hit == self:
+			print("I am being highlighted:", self)
+			shader_material1.set_shader_parameter("outline_onoff", 1.0)
+			shader_material2.set_shader_parameter("outline_onoff", 1.0)
+		else:
+			shader_material1.set_shader_parameter("outline_onoff", 0.0)
+			shader_material2.set_shader_parameter("outline_onoff", 0.0)
+	
 		
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
@@ -207,3 +225,12 @@ func _on_hurtbox_body_exited(body: Node3D) -> void:
 
 func _on_attack_cooldown_timeout() -> void:
 	can_attack = true
+	
+func update_animation_parameters(): 
+	if attacking == true:
+		animation_tree["parameters/conditions/is_walking"] = false
+		animation_tree["parameters/conditions/is_attacking"] = true
+	else:
+		animation_tree["parameters/conditions/is_attacking"] = false
+		animation_tree["parameters/conditions/is_walking"] = true
+		
