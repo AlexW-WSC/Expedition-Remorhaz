@@ -39,7 +39,7 @@ func _on_yeti_timer_timeout() -> void:
 # crashes spawning wave2???
 func prepare_spawn(current_wave):
 	if current_wave == 1:
-		spawn_logic(10, "Yeti", 0.75, "Yeti Ranger", 0.25, null, 0, null, 0, area)
+		spawn_logic(20, "Yeti", 1, null, 0, null, 0, null, 0, area)
 	elif current_wave == 2:
 		spawn_logic(50, "Yeti", 0.75, "Yeti Ranger", 0.25, null, 0, null, 0, area)
 	elif current_wave == 3: 

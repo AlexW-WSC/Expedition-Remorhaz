@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://oph734p5l0am" path="res://textures/icon.svg" id="2_1hpqh"]
 [ext_resource type="Script" uid="uid://da3usqhb6ruuv" path="res://scripts/enemy_spawner.gd" id="5_vs82q"]
 [ext_resource type="PackedScene" uid="uid://cr2w1348wljue" path="res://scenes/vento_player.tscn" id="6_7fyak"]
-[ext_resource type="PackedScene" uid="uid://dhgljm2ocjttf" path="res://scenes/yeti_enemy.tscn" id="6_qsiih"]
+[ext_resource type="PackedScene" uid="uid://djsj7th6p0j6q" path="res://scenes/yeti_enemy.tscn" id="6_qsiih"]
 [ext_resource type="PackedScene" uid="uid://bjmdyvmdf13iv" path="res://scenes/yeti_ranger_enemy.tscn" id="7_7d840"]
 [ext_resource type="PackedScene" uid="uid://uldg6tvdit4x" path="res://models/yetiV0.6.blend" id="7_fpdtd"]
 
