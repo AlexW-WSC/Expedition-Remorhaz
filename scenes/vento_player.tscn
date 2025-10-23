@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cr2w1348wljue"]
+[gd_scene load_steps=16 format=3 uid="uid://cr2w1348wljue"]
 
 [ext_resource type="PackedScene" uid="uid://cp6my5b6ml3k8" path="res://models/VentoFinal.blend" id="1_mrhls"]
 [ext_resource type="Texture2D" uid="uid://y4jlq6bn2on3" path="res://textures/crosshair.png" id="2_0xo2e"]
@@ -12,32 +12,54 @@ size = Vector3(1, 2.14319, 0.687378)
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0xo2e"]
 animation = &"idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4ee51"]
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_4ee51"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ep6lb"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_0xo2e")
+nodes/Animation/position = Vector2(30, 70)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_4ee51")
+nodes/TimeScale/position = Vector2(210, 40)
+nodes/output/position = Vector2(390, 40)
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_as1fg"]
 animation = &"run"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ep6lb"]
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_kbc5t"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_rs0pg"]
+graph_offset = Vector2(-63.36, 66.24)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_as1fg")
+nodes/Animation/position = Vector2(-10, 120)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_kbc5t")
+nodes/TimeScale/position = Vector2(170, 90)
+nodes/output/position = Vector2(350, 90)
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ndq2m"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_as1fg"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3u6p6"]
 xfade_time = 0.2
 advance_mode = 2
 advance_condition = &"is_moving"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kbc5t"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i7007"]
 xfade_time = 0.2
 advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_rs0pg"]
 states/End/position = Vector2(710, 99.5)
-states/idle/node = SubResource("AnimationNodeAnimation_0xo2e")
-states/idle/position = Vector2(351.5, 105)
-states/run/node = SubResource("AnimationNodeAnimation_4ee51")
-states/run/position = Vector2(524.5, 99.625)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_ep6lb"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_as1fg"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_kbc5t")]
-graph_offset = Vector2(71.25, -38.625)
+states/Start/position = Vector2(51, 131.5)
+states/idle/node = SubResource("AnimationNodeBlendTree_ep6lb")
+states/idle/position = Vector2(188.03, 144.037)
+states/run/node = SubResource("AnimationNodeBlendTree_rs0pg")
+states/run/position = Vector2(396.53, 143.412)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_ndq2m"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_3u6p6"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_i7007")]
+graph_offset = Vector2(-71.97, 27.0375)
 
-[node name="VentoPlayer" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast", "look_at_modifier", "skeleton") instance=ExtResource("1_mrhls")]
+[node name="VentoPlayer" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast", "look_at_modifier", "skeleton") groups=["player"] instance=ExtResource("1_mrhls")]
 script = ExtResource("2_4ee51")
 ability_1_cooldown_timer = NodePath("Ability1Cooldown")
 reload_timer = NodePath("ReloadTimer")
@@ -52,26 +74,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 
 
 [node name="Skeleton3D" parent="Armature" index="0"]
 transform = Transform3D(1, 1.22305e-05, 0.000120123, -1.21809e-05, 1, -0.000126029, -0.000120128, 0.000126024, 1, 0, 0, 0)
-bones/0/position = Vector3(-0.00478495, 1.03286, 0.0455251)
-bones/0/rotation = Quaternion(0.0177451, -0.708648, -0.0146491, 0.705187)
+bones/0/position = Vector3(-0.00478495, 1.03893, 0.0455251)
+bones/0/rotation = Quaternion(0.015348, -0.708142, -0.0120651, 0.7058)
 bones/1/rotation = Quaternion(-0.00629594, 0.000400113, 0.0059771, 0.999962)
 bones/3/rotation = Quaternion(-0.62994, -0.207252, -0.541157, 0.51708)
 bones/4/rotation = Quaternion(0.0622876, 0.0253362, -0.178508, 0.981638)
-bones/5/rotation = Quaternion(0.990221, 0.139209, -0.00467027, -0.00788263)
+bones/5/rotation = Quaternion(0.993088, 0.117127, -0.00388951, -0.00654864)
 bones/5/scale = Vector3(1.00006, 0.999999, 1)
-bones/6/rotation = Quaternion(-0.0112044, 0.000158145, 0.196683, 0.980403)
+bones/6/rotation = Quaternion(-0.00935127, 0.000159086, 0.164153, 0.986391)
 bones/6/scale = Vector3(1, 0.999999, 1)
-bones/7/rotation = Quaternion(-0.031209, -0.0595897, -0.690727, 0.719981)
+bones/7/rotation = Quaternion(-0.0309646, -0.0605797, -0.680295, 0.729774)
 bones/7/scale = Vector3(0.999997, 1.00002, 0.999999)
 bones/8/rotation = Quaternion(0.0138017, 0.666199, 0.74552, -0.0137422)
 bones/9/rotation = Quaternion(-0.345177, 0.178097, 0.623176, 0.678812)
 bones/10/rotation = Quaternion(0.0717227, -0.0121272, 0.1262, 0.989334)
 bones/11/position = Vector3(-0.0470401, 0.32053, -0.00267799)
 bones/11/rotation = Quaternion(-0.0668262, -0.261721, 0.00385151, 0.96282)
-bones/12/rotation = Quaternion(0.000356857, 0.0118457, 0.990213, -0.139058)
+bones/12/rotation = Quaternion(-0.000371998, 0.0109589, 0.993079, -0.116936)
 bones/12/scale = Vector3(1.00006, 0.999999, 1)
-bones/13/rotation = Quaternion(-0.0111031, -0.00015826, -0.194905, 0.980759)
-bones/14/rotation = Quaternion(-0.0315182, 0.0595019, 0.689544, 0.721107)
+bones/13/rotation = Quaternion(-0.00927418, -0.000159181, -0.1628, 0.986615)
+bones/14/rotation = Quaternion(-0.0311713, 0.0605277, 0.679445, 0.730561)
 bones/14/scale = Vector3(1, 1.00002, 0.999999)
 bones/15/position = Vector3(0.174128, 0.622434, 0.342851)
 bones/16/position = Vector3(0.176341, 0.0616634, 0.00883541)
@@ -157,5 +179,7 @@ tree_root = SubResource("AnimationNodeStateMachine_rs0pg")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/idle = false
 parameters/conditions/is_moving = false
+parameters/idle/TimeScale/scale = 1.5
+parameters/run/TimeScale/scale = 2.3
 
 [connection signal="timeout" from="Ability1Cooldown" to="." method="_on_ability_1_cooldown_timeout"]

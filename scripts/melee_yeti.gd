@@ -1,7 +1,7 @@
 extends CharacterBody3D
 var max_health := 40.0
 var health := max_health
-var melee_attack_damage := 5.0
+var melee_attack_damage := 20.0
 
 var xp_given := 1.0
 var gold_given := 10.0
@@ -79,6 +79,7 @@ void fragment() {
 var player_body
 
 func _ready() -> void:
+	print(player)
 	if mesh1 == null:
 		print("mesh1 is null! Check path: $Armature/Skeleton3D/Body")
 		return
@@ -97,7 +98,7 @@ func _ready() -> void:
 	mesh1.material_overlay = shader_material1
 	mesh2.material_overlay = shader_material2
 	self.damage_player.connect(Callable(player, "_on_damaged_by_enemy"))
-	
+	print(self.damage_player.is_connected(Callable(player, "_on_damaged_by_enemy")))
 
 
 func _physics_process(delta: float) -> void:
@@ -120,6 +121,7 @@ func _physics_process(delta: float) -> void:
 	if hurtbox_enabled == true:
 		if hurtbox.overlaps_body(player_body):
 			emit_signal("damage_player", melee_attack_damage)
+			print("TRYING TO HURT")
 			hurtbox_enabled = false
 	
 

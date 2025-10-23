@@ -1,9 +1,13 @@
-res://scenes/MainGame.tscn
+res://scenes/menu.tscn
 res://scripts/enemy_spawner.gd
 res://scripts/melee_yeti.gd
 res://outline.gdshader
-res://monkey_weighted.gdshader
+res://scenes/ui.tscn
 res://scenes/yeti_enemy.tscn
+res://scenes/MainGame.tscn
 res://scenes/vento_player.tscn
-res://yetitesiting.tscn
-res://scenes/yeti_ranger_enemy.tscn
+res://scenes/player.tscn
+res://scripts/player_variables.gd
+res://scenes/credits.tscn
+res://scripts/menu.gd
+res://scripts/credits_menu.gd

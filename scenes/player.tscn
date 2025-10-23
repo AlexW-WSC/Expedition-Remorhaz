@@ -12,7 +12,7 @@ uv1_scale = Vector3(4.2, 4.2, 4.2)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8qpgq"]
 
-[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast") groups=["player"]]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("ability_1_cooldown_timer", "reload_timer", "ability_1_cooldown_display", "bullet_display", "crosshair_raycast")]
 script = ExtResource("1_g2els")
 ability_1_cooldown_timer = NodePath("Ability1Cooldown")
 reload_timer = NodePath("ReloadTimer")

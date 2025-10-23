@@ -127,7 +127,7 @@ top_level = true
 [node name="Minutes Timer" type="Timer" parent="."]
 wait_time = 60.0
 
-[node name="VentoPlayer" parent="." groups=["player"] instance=ExtResource("6_7fyak")]
+[node name="VentoPlayer" parent="." instance=ExtResource("6_7fyak")]
 
 [node name="yetiV0_6" parent="." instance=ExtResource("7_fpdtd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75343, 5951.26, 4.31585)

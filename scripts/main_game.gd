@@ -1,7 +1,6 @@
 extends Node3D
 
 signal current_wave
-
 @onready var player = $VentoPlayer
 @export var secondsTimer : Timer
 @export var minutesTimer: Timer 
@@ -26,7 +25,6 @@ func _on_seconds_timer_timeout() -> void:
 			print("0" + str(minutes),":", str(seconds))
 		elif seconds < 10:
 			print("0" + str(minutes),":", "0" + str(seconds))
-	
 
 func _on_minutes_timer_timeout() -> void:
 	minutes -= 1 
@@ -34,6 +32,7 @@ func _on_minutes_timer_timeout() -> void:
 	wave = max_wave - minutes
 	print(wave)
 	current_wave.emit(wave)
+	
 	
 	
 ####

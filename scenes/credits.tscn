@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhfgu1yfn31en"]
+
+[ext_resource type="Script" uid="uid://crbtrejdi6tms" path="res://scripts/credits_menu.gd" id="1_0bpdh"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0bpdh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1600.0
+offset_bottom = 898.0
+scale = Vector2(1.2, 1.2)
+color = Color(0.941176, 0.807843, 0.466667, 1)
+
+[node name="Title" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -564.167
+offset_top = 0.833333
+offset_right = 734.833
+offset_bottom = 306.833
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 100
+text = "Untimely End Productions"
+
+[node name="CR Credit" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -788.0
+offset_top = -63.0
+offset_right = 796.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "This game includes locations inspired by Critical Role, created by Matthew Mercer and the cast of Critical Role. Critical Role is a registered trademark of Critical Role Productions, LLC. This game is a fan-made, non-commercial project and is not affiliated with or endorsed by Critical Role Productions."
+
+[node name="Alex Worsley" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 224.0
+offset_right = 1816.0
+offset_bottom = 308.0
+theme_override_font_sizes/normal_font_size = 50
+text = "Alex Worsley -                                                        Lead Programmer"
+
+[node name="Amelia Barr" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 380.0
+offset_right = 1747.0
+offset_bottom = 474.0
+theme_override_font_sizes/normal_font_size = 50
+text = "Amelia Barr -                                                          Asset Creator "
+
+[node name="Sam Norrie (GOAT)" type="RichTextLabel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 548.0
+offset_right = 2072.0
+offset_bottom = 693.0
+theme_override_font_sizes/normal_font_size = 50
+text = "Sam Norrie -                                                          Game Designer                      "
+
+[node name="Back" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 62
+text = "Back"
+
+[connection signal="pressed" from="ColorRect/Back" to="." method="_on_back_pressed"]

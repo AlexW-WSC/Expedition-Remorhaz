@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+Button
 AnimationTree
 MeshInstance3D
 CollisionShape3D
@@ -7,19 +7,8 @@ GPUParticlesAttractorBox3D
 GPUParticles3D
 Node3D
 LookAtModifier3D
-=======
 MeshInstance3D
 CollisionShape3D
 Area3D
 GPUParticlesAttractorBox3D
 GPUParticles3D
-Node3D
-LookAtModifier3D
-AnimationTree
->>>>>>> Stashed changes
-CharacterBody3D
-Timer
-ShapeCast3D
-StaticBody3D
-NavigationAgent3D
-NavigationRegion3D

@@ -14,6 +14,8 @@ var ability_1_usable = true
 
 var last_highlighted = null
 #timers 
+var UI_packed_scene = preload("res://scenes/ui.tscn")
+
 @export var ability_1_cooldown_timer: Timer 
 @export var reload_timer: Timer
 #labels
@@ -43,6 +45,8 @@ func reload_weapon():
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	var ui_instance = UI_packed_scene.instantiate()
+	add_child(ui_instance)
 	
 	
 
@@ -104,6 +108,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("e"):
 		print("Rawr Ability4")
 		
+	if Input.is_action_just_pressed("esc"):
+		get_tree().quit()
+		
 	
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -142,11 +149,16 @@ func _on_ability_1_cooldown_timeout() -> void:
 	
 
 func _on_damaged_by_enemy(damage):
+	print("recieved damage")
 	player_health -= damage
 	print(damage)
 	print(player_health)
+	PlayerVariables.player_health = player_health
+	print("player health updated to")
+	print(PlayerVariables.player_health)
 	if player_health <= 0:
 		print("AAAAAAAHHHHHHHH")
+		queue_free()
 
 func update_animation_parameters():
 	if (velocity == Vector3.ZERO):
